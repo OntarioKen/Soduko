@@ -48,7 +48,7 @@ namespace Soduko
 
         //================================================================================
 
-        internal int CellValue(
+        internal int SafeCellValue(
                 int iCol,
                 int iRow)
         {
@@ -84,7 +84,7 @@ namespace Soduko
                 return false;
             }
 
-            int iCellValue = CellValue(iCol, iRow);      
+            int iCellValue = SafeCellValue(iCol, iRow);      
             bool bOK = iCellValue != 0;                 // already has a valid value
 
             if (bOK)
@@ -119,12 +119,12 @@ namespace Soduko
 
             // is it already in this row?
             for (int i = 0; i < 9 && bOK; i++)
-                if (i != iCol && CellValue(i, iRow) == x)
+                if (i != iCol && SafeCellValue(i, iRow) == x)
                     bOK = false;
 
             // is it already in this column?
             for (int i = 0; i < 9 && bOK; i++)
-                if (i != iRow && CellValue(iCol, i) == x)
+                if (i != iRow && SafeCellValue(iCol, i) == x)
                     bOK = false;
 
             if (bOK)
@@ -133,7 +133,7 @@ namespace Soduko
                 int iRowBlock = (iRow / 3) * 3;
                 for (int i = 0; i < 3; i++)
                     for (int j = 0; j < 3; j++)
-                        if (iColBlock + i != iCol && iRowBlock + j != iRow && CellValue(iColBlock + i, iRowBlock + j) == x)
+                        if (iColBlock + i != iCol && iRowBlock + j != iRow && SafeCellValue(iColBlock + i, iRowBlock + j) == x)
                             bOK = false;
             }
             return bOK;
@@ -146,7 +146,7 @@ namespace Soduko
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                 {
-                    if (CellValue(j, i) == 0)
+                    if (SafeCellValue(j, i) == 0)
                     {
                         dataGridView1.Rows[i].Cells[j].Value = null;
                         dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Black;
